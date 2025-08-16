@@ -25,6 +25,6 @@ ENV CHOKIDAR_USEPOLLING=true
 # RUN groupadd -g 1001 nodejs && \
 #     useradd -r -u 1001 -g nodejs nodejs && \
 #     chown -R nodejs:nodejs /workspace
-# USER nodejs
+USER root
 
 CMD ["tail", "-f", "/dev/null"]

@@ -21,10 +21,11 @@ RUN npm install -g \
 ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=true
 
-# 创建非root用户
-RUN groupadd -g 1001 nodejs && \
-    useradd -r -u 1001 -g nodejs nodejs && \
-    chown -R nodejs:nodejs /workspace
-USER nodejs
+# # 创建非root用户
+# RUN groupadd -g 1001 nodejs && \
+#     useradd -r -u 1001 -g nodejs nodejs && \
+#     chown -R nodejs:nodejs /workspace
+# USER nodejs
+USER root
 
 CMD ["tail", "-f", "/dev/null"]
