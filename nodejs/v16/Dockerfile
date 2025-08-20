@@ -1,8 +1,8 @@
 FROM zhcoder-docker-registry.com:8000/library/node:v16-slim
-RUN sed -i \
-    -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
-    -e 's|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \
-    /etc/apt/sources.list.d/debian.sources
+# RUN sed -i \
+#     -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
+#     -e 's|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \
+#     /etc/apt/sources.list.d/debian.sources
 
 # 安装系统依赖
 RUN /usr/bin/apt upgrade -y 
