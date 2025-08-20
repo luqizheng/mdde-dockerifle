@@ -1,4 +1,4 @@
-FROM zhcoder-docker-registry.com:8000/library/node:v22-slim
+FROM zhcoder-docker-registry.com:8000/official/node:22.18.0-bullseye-slim
 # RUN sed -i \
 #     -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
 #     -e 's|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \

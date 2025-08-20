@@ -1,7 +1,7 @@
 
 services:
   dotnet-dev:
-    image: zhcoder-docker-registry.com:8000/dev-env/node-dev-22:1.0.0
+    image: zhcoder-docker-registry.com:8000/dev-env/nodejs:v22
     container_name: ${CONTAINER_NAME:-dotnet-dev}
     volumes:
       - ${workspace}:/workspace

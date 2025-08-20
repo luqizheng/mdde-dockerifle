@@ -116,10 +116,30 @@ try {
         Write-Host "构建完成!" -ForegroundColor Green
     }
     Write-Host "完整镜像标签: $FullImageTag" -ForegroundColor Yellow
+    
+    # 自动更新 docker-compose.yml 中的镜像名称
+    $DockerComposePath = Join-Path $DirectoryPath "docker-compose.yml"
+    if (Test-Path $DockerComposePath) {
+        Write-Host "正在更新 docker-compose.yml 中的镜像名称..." -ForegroundColor Cyan
+        
+        # 读取文件内容
+        $ComposeContent = Get-Content $DockerComposePath -Raw
+        
+        # 使用正则表达式替换 image 字段
+        $UpdatedContent = $ComposeContent -replace "(\s+image:\s+)([^\r\n]+)", "`$1$FullImageTag"
+        
+        # 写回文件
+        Set-Content -Path $DockerComposePath -Value $UpdatedContent -NoNewline
+        
+        Write-Host "✅ 已更新 docker-compose.yml 中的镜像名称为: $FullImageTag" -ForegroundColor Green
+    } else {
+        Write-Host "⚠️  未找到 docker-compose.yml 文件，跳过镜像名称更新" -ForegroundColor Yellow
+    }
+    
     Write-Host ""
     Write-Host "=========================================" -ForegroundColor Cyan
     Write-Host "📋 Docker Compose 使用说明:" -ForegroundColor Cyan
-    Write-Host "在 docker-compose.yml 中使用以下镜像名称:" -ForegroundColor White
+    Write-Host "镜像名称已自动更新到 docker-compose.yml 文件中" -ForegroundColor White
     Write-Host "image: $FullImageTag" -ForegroundColor Yellow
     Write-Host "=========================================" -ForegroundColor Cyan
     

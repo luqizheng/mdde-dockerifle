@@ -107,9 +107,26 @@ else
     echo "构建完成!"
 fi
 echo "完整镜像标签: $FULL_IMAGE_TAG"
+
+# 自动更新 docker-compose.yml 中的镜像名称
+DOCKER_COMPOSE_PATH="$DIRECTORY_PATH/docker-compose.yml"
+if [ -f "$DOCKER_COMPOSE_PATH" ]; then
+    echo "正在更新 docker-compose.yml 中的镜像名称..."
+    
+    # 使用 sed 替换 image 字段，保持缩进
+    sed -i.bak "s|\([[:space:]]*image:[[:space:]]*\).*|\1$FULL_IMAGE_TAG|" "$DOCKER_COMPOSE_PATH"
+    
+    # 删除备份文件
+    rm -f "$DOCKER_COMPOSE_PATH.bak"
+    
+    echo "✅ 已更新 docker-compose.yml 中的镜像名称为: $FULL_IMAGE_TAG"
+else
+    echo "⚠️  未找到 docker-compose.yml 文件，跳过镜像名称更新"
+fi
+
 echo ""
 echo "========================================="
 echo "📋 Docker Compose 使用说明:"
-echo "在 docker-compose.yml 中使用以下镜像名称:"
+echo "镜像名称已自动更新到 docker-compose.yml 文件中"
 echo "image: $FULL_IMAGE_TAG"
 echo "========================================="
