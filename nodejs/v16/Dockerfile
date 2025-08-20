@@ -1,4 +1,4 @@
-FROM zhcoder-docker-registry.com:8000/library/node:v16-slim
+FROM zhcoder-docker-registry.com:8000/official/node:16.20.2-bookworm-slim
 # RUN sed -i \
 #     -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
 #     -e 's|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \

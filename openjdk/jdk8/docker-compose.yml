@@ -1,0 +1,30 @@
+
+services:
+  java-dev:
+    image: zhcoder-docker-registry.com:8000/dev-env/openjdk:8-jdk
+    container_name: ${CONTAINER_NAME:-java-dev}
+    volumes:
+      - ${workspace}:/workspace
+      - maven-repo:/home/developer/.m2/repository
+      - gradle-cache:/home/developer/.gradle/caches
+    working_dir: /workspace
+    ports:
+      - "${APP_PORT:-8080}:8080"
+      - "${DEBUG_PORT:-5005}:5005"
+      - "${JMX_PORT:-9999}:9999"
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx2g -XX:+UseG1GC
+      - MAVEN_OPTS=-Xmx1g
+      - GRADLE_OPTS=-Xmx1g -Dorg.gradle.daemon=false
+      - TZ=Asia/Shanghai
+    command: tail -f /dev/null
+    networks:
+      - dev-network
+
+volumes:
+  maven-repo:
+  gradle-cache:
+
+networks:
+  dev-network:
+    driver: bridge
