@@ -1,5 +1,5 @@
 #FROM nvidia/cuda:12.1-devel-ubuntu22.04
-FROM zhcoder-docker-registry.com:8000/library/cuda:12.1.0-devel-ubuntu20.04
+FROM zhcoder-docker-registry.com:8000/official/cuda:12.1.0-devel-ubuntu20.04
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
 COPY source.list /etc/apt/sources.list.d
