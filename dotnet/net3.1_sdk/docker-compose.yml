@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  dotnet-dev:
+    image: zhcoder-docker-registry.com:8000/dev-env/dotnet3.1:1.0
+    container_name: ${CONTAINER_NAME:-dotnet-dev}
+    volumes:
+      - ${workspace}:/workspace
+      - nuget-packages:/home/developer/.nuget/packages
+    working_dir: /workspace
+    ports:
+      - "${APP_PORT:-5001:5660}"
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_URLS=http://+:5001
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: tail -f /dev/null
+    networks:
+      - dev-network
+
+volumes:
+  nuget-packages:
+
+networks:
+  dev-network:
+    driver: bridge
