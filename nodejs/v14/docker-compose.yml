@@ -1,0 +1,21 @@
+
+services:
+  dotnet-dev:
+    image: zhcoder-docker-registry.com:8000/dev-env/nodejs:v14
+    container_name: ${CONTAINER_NAME:-dotnet-dev}
+    volumes:
+      - ${workspace}:/workspace
+      - nuget-packages:/home/developer/.nuget/packages
+    working_dir: /workspace
+    ports:
+      - "${APP_PORT:-5001:5660}"
+    command: tail -f /dev/null
+    networks:
+      - dev-network
+
+volumes:
+  nuget-packages:
+
+networks:
+  dev-network:
+    driver: bridge

@@ -1,0 +1,9 @@
+﻿[
+    "dotnet/sdk3.1",
+    "dotnet/sdk9",
+    "nodejs/v14",
+    "nodejs/v16",
+    "nodejs/v22",
+    "openjdk/jdk8",
+    "python/yolo-11"
+]
