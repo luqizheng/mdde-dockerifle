@@ -1,1 +1,0 @@
-docker buildx build --platform linux/amd64 --push -t zhcoder-docker-registry.com:8000/dev-env/node-dev-16:1.0 .

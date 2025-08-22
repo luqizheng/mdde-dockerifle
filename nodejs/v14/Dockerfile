@@ -1,4 +1,4 @@
-FROM zhcoder-docker-registry.com:8000/official/node:22.18.0-bullseye-slim
+FROM zhcoder-docker-registry.com:8000/official/node:14.21.3
 # RUN sed -i \
 #     -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
 #     -e 's|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \
@@ -15,17 +15,16 @@ RUN npm install -g \
     typescript \
     ts-node \
     @types/node \
-    pnpm 
+    nrm 
 
 # 设置环境变量
 ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=true
 
-# # 创建非root用户
+# 创建非root用户
 # RUN groupadd -g 1001 nodejs && \
 #     useradd -r -u 1001 -g nodejs nodejs && \
 #     chown -R nodejs:nodejs /workspace
-# USER nodejs
 USER root
 
 CMD ["tail", "-f", "/dev/null"]

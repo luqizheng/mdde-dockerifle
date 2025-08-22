@@ -1,8 +1,8 @@
-FROM nvidia/cuda:12.1-devel-ubuntu22.04
-
+#FROM nvidia/cuda:12.1-devel-ubuntu22.04
+FROM zhcoder-docker-registry.com:8000/official/cuda:12.1.0-devel-ubuntu20.04
 # 设置非交互式安装
 ENV DEBIAN_FRONTEND=noninteractive
-
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 # 安装Python和系统依赖
 RUN apt-get update && apt-get install -y \
     python3.11 \
@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     git \
     curl \
-    vim \
-    nano \
     wget \
     ffmpeg \
     libsm6 \
