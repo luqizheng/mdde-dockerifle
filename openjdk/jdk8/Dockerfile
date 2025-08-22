@@ -46,7 +46,7 @@ RUN mkdir -p /opt/maven/conf && \
     echo '</settings>' >> /opt/maven/conf/settings.xml
 
 # 安装 Gradle（使用较新版本）
-RUN curl -fsSL https://services.gradle.org/distributions/gradle-7.6.2-bin.zip -o gradle.zip && \
+RUN curl -fsSL https://mirrors.cloud.tencent.com/gradle/gradle-7.6.2-bin.zip -o gradle.zip && \
     mkdir -p /opt/gradle && \
     unzip gradle.zip -d /opt/gradle && \
     rm gradle.zip

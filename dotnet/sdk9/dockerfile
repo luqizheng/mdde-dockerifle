@@ -1,7 +1,20 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0
 
+
 # 设置工作目录
 WORKDIR /workspace
+
+RUN apt update && \
+    apt upgrade -y
+RUN /usr/bin/apt install -y \
+    curl \
+    wget \
+    unzip \
+    zip \
+    tree \
+    htop \
+    iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
 
 # 创建非root用户
 RUN useradd -m -s /bin/bash developer && \

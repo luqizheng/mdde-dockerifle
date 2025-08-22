@@ -1,7 +1,7 @@
 
 services:
   java-dev:
-    image: zhcoder-docker-registry.com:8000/dev-env/openjdk:8-jdk
+    image: zhcoder-docker-registry.com:8000/dev-env/openjdk:jdk8
     container_name: ${CONTAINER_NAME:-java-dev}
     volumes:
       - ${workspace}:/workspace

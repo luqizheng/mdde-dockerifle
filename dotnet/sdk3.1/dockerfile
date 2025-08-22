@@ -2,6 +2,19 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1
 
 # 设置工作目录
 WORKDIR /workspace
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
+    sed -i 's|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    apt update && \
+    apt upgrade -y
+RUN /usr/bin/apt install -y \
+    curl \
+    wget \
+    unzip \
+    zip \
+    tree \
+    htop \
+    iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
 
 # 创建非root用户
 RUN useradd -m -s /bin/bash developer && \
