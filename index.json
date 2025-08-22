@@ -1,0 +1,30 @@
+﻿[
+    {
+        "name":  "dotnet/sdk3.1",
+        "description":  ".net sdk3.1"
+    },
+    {
+        "name":  "dotnet/sdk9",
+        "description":  ".net sdk9"
+    },
+    {
+        "name":  "nodejs/v14",
+        "description":  ""
+    },
+    {
+        "name":  "nodejs/v16",
+        "description":  ""
+    },
+    {
+        "name":  "nodejs/v22",
+        "description":  ""
+    },
+    {
+        "name":  "openjdk/jdk8",
+        "description":  ""
+    },
+    {
+        "name":  "python/yolo-11",
+        "description":  ""
+    }
+]

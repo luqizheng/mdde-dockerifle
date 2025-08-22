@@ -5,5 +5,7 @@
     "nodejs/v16",
     "nodejs/v22",
     "openjdk/jdk8",
+    "openjdk/jdk17",
+    "openjdk/jdk21",
     "python/yolo-11"
 ]

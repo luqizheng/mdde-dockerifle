@@ -31,13 +31,14 @@ function Write-ColorOutput {
 function Find-DockerDirectories {
     <#
     .SYNOPSIS
-        查找包含Dockerfile的目录
+        查找包含Dockerfile的目录并构建对象信息
     #>
     param(
         [string]$BasePath = "."
     )
     
     $dockerDirs = @()
+    $processedPaths = @{}
     
     try {
         # 递归查找包含Dockerfile的目录
@@ -49,14 +50,36 @@ function Find-DockerDirectories {
             $dirPath = $dockerfile.Directory.FullName
             $relativePath = (Resolve-Path -Path $dirPath -Relative).TrimStart(".\").Replace("\", "/")
             
-            # 跳过根目录
-            if ($relativePath -ne "." -and $relativePath -ne "") {
-                $dockerDirs += $relativePath
+            # 跳过根目录和已处理的路径
+            if ($relativePath -ne "." -and $relativePath -ne "" -and -not $processedPaths.ContainsKey($relativePath)) {
+                $processedPaths[$relativePath] = $true
+                
+                # 读取描述文件
+                $descriptionFile = Join-Path $dirPath "desc.txt"
+                $description = ""
+                
+                if (Test-Path $descriptionFile) {
+                    try {
+                        $description = (Get-Content $descriptionFile -Raw -Encoding UTF8).Trim()
+                    }
+                    catch {
+                        Write-ColorOutput "Warning: Could not read desc.txt in $relativePath" "Yellow"
+                        $description = ""
+                    }
+                }
+                
+                # 创建对象
+                $dockerDir = [PSCustomObject]@{
+                    name = $relativePath
+                    description = $description
+                }
+                
+                $dockerDirs += $dockerDir
             }
         }
         
-        # 去重并排序
-        $dockerDirs = $dockerDirs | Sort-Object -Unique
+        # 按名称排序
+        $dockerDirs = $dockerDirs | Sort-Object name
         
         return $dockerDirs
     }
@@ -69,28 +92,29 @@ function Find-DockerDirectories {
 function Write-JsonIndex {
     <#
     .SYNOPSIS
-        将目录列表写入JSON文件
+        将目录对象列表写入JSON文件
     #>
     param(
-        [string[]]$Directories,
+        [PSCustomObject[]]$DirectoryObjects,
         [string]$FilePath
     )
     
     try {
         # 生成JSON内容
-        $jsonContent = $Directories | ConvertTo-Json -Depth 2
+        $jsonContent = $DirectoryObjects | ConvertTo-Json -Depth 3
         
         # 写入文件
         $jsonContent | Out-File -FilePath $FilePath -Encoding UTF8
         
         Write-ColorOutput "JSON index file generated: $FilePath" "Green"
-        Write-ColorOutput "Found $($Directories.Count) Docker build directories" "Cyan"
+        Write-ColorOutput "Found $($DirectoryObjects.Count) Docker build directories" "Cyan"
         
         # 显示找到的目录
-        if ($Directories.Count -gt 0) {
+        if ($DirectoryObjects.Count -gt 0) {
             Write-ColorOutput "Included directories:" "Yellow"
-            foreach ($dir in $Directories) {
-                Write-ColorOutput "   - $dir" "White"
+            foreach ($dirObj in $DirectoryObjects) {
+                $desc = if ($dirObj.description) { " - $($dirObj.description)" } else { "" }
+                Write-ColorOutput "   - $($dirObj.name)$desc" "White"
             }
         }
     }
@@ -114,7 +138,7 @@ try {
     }
     
     # 生成JSON索引文件
-    Write-JsonIndex -Directories $directories -FilePath $OutputFile
+    Write-JsonIndex -DirectoryObjects $directories -FilePath $OutputFile
     
     Write-ColorOutput "Index generation completed!" "Green"
 }
