@@ -5,23 +5,34 @@ ENV LANG=C.UTF-8 \
     TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
 
-# Set archive repositories for Buster
-RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list && \
-    apt update && \
-    apt upgrade -y
-    
+RUN echo "Types: deb" > /etc/apt/sources.list.d/tuna.sources && \
+    echo "URIs: https://mirrors.tuna.tsinghua.edu.cn/debian" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Suites: bookworm bookworm-updates bookworm-backports" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Components: main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Types: deb" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "URIs: https://mirrors.tuna.tsinghua.edu.cn/debian-security" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Suites: bookworm-security" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Components: main contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/tuna.sources && \
+    echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/tuna.sources
 # 安装系统依赖
-RUN /usr/bin/apt upgrade -y 
-RUN /usr/bin/apt install -y \
+RUN apt-get update && apt-get upgrade -y 
+RUN apt-get install -y nano iputils-ping vim telnet \
+    net-tools \
+    lsof \
+    nmap \
     curl \
-    wget \
-    unzip \
-    zip \
     tree \
     htop \
     iputils-ping \
-    && rm -rf /var/lib/apt/lists/*
+    nano \
+    telnet\
+    lsof\
+    net-tools\
+    jq && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
 WORKDIR /workspace
