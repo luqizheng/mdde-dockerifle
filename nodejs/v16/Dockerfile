@@ -34,14 +34,15 @@ RUN apt-get install -y nano iputils-ping vim telnet \
 
 # 设置工作目录
 WORKDIR /workspace
-RUN npm config set registry http://192.168.2.8:8081/repository/npm-group/
+
 # 全局安装常用开发工具
 RUN npm install -g \
     typescript \
     ts-node \
     @types/node \
     nrm 
-
+RUN nrm add local  http://192.168.2.8:8081/repository/npm-group/ \
+    && nrm add pub  http://192.168.2.8:8081/repository/coder-npm-host/
 # 设置环境变量
 ENV NODE_ENV=development
 ENV CHOKIDAR_USEPOLLING=true
