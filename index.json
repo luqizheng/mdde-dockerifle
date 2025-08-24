@@ -9,7 +9,7 @@
     },
     {
         "name":  "nodejs/v14",
-        "description":  ""
+        "description":  "node:14.21.3"
     },
     {
         "name":  "nodejs/v16",
