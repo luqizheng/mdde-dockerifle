@@ -2,7 +2,7 @@
 services:
   java-dev:
     image: zhcoder-docker-registry.com:8000/dev-env/openjdk:8-jdk
-    container_name: ${CONTAINER_NAME:-java-dev}
+    container_name: ${container_name:-java-dev}
     volumes:
       - ${workspace}:/workspace
       - maven-repo:/home/developer/.m2/repository
