@@ -2,7 +2,7 @@
 services:
   dotnet-dev:
     image: zhcoder-docker-registry.com:8000/dev-env/dotnet:sdk3.1
-    container_name: ${CONTAINER_NAME:-dotnet-dev}
+    container_name: ${container_name:-dotnet31}
     volumes:
       - ${workspace}:/workspace
       - nuget-packages:/home/developer/.nuget/packages
