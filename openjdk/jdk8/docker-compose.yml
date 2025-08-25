@@ -5,8 +5,8 @@ services:
     container_name: ${container_name:-java-jdk8}
     volumes:
       - ${workspace}:/workspace
-      - maven-repo:/home/developer/.m2/repository
-      - gradle-cache:/home/developer/.gradle/caches
+      - maven-repo:/root/.m2/repository
+      - gradle-cache:/root/.gradle/caches
     working_dir: /workspace
     ports:
       - "${APP_PORT:-8080}:8080"
