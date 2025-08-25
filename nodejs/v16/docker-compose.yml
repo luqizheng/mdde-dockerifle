@@ -2,7 +2,7 @@
 services:
   dotnet-dev:
     image: zhcoder-docker-registry.com:8000/dev-env/nodejs:v16
-    container_name: ${container_name:-node-dev}
+    container_name: ${container_name:-node_v16}
     volumes:
       - ${workspace}:/workspace
       - nuget-packages:/home/developer/.nuget/packages
