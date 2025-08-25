@@ -1,12 +1,13 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1
+FROM mcr.microsoft.com/dotnet/sdk:2.1
 
 # 设置工作目录
 WORKDIR /workspace
-RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list && \
-    apt update && \
-    apt upgrade -y
-RUN /usr/bin/apt install -y \
+# 配置 Debian stretch 源
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian stretch-backports main" >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get upgrade -y
+RUN /usr/bin/apt-get install -y \
     curl \
     wget \
     unzip \
