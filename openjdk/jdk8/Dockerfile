@@ -71,26 +71,17 @@ ENV MAVEN_HOME=/opt/maven \
 
 
 
-# 创建开发用户（非 root）
-RUN groupadd -r developer && useradd -r -g developer developer && \
-    mkdir -p /home/developer && chown developer:developer /home/developer && \
-    mkdir -p /workspace && chown developer:developer /workspace
+# 创建工作目录
+RUN mkdir -p /workspace
 
-# 复制 Maven 配置到用户目录
-RUN mkdir -p /home/developer/.m2 && \
-    cp /opt/maven/conf/settings.xml /home/developer/.m2/ && \
-    chown -R developer:developer /home/developer/.m2
-
-# 复制 Gradle 配置到用户目录
-RUN mkdir -p /home/developer/.gradle && \
-    cp /root/.gradle/init.gradle /home/developer/.gradle/ && \
-    chown -R developer:developer /home/developer/.gradle
+# 复制 Maven 配置到 root 用户目录
+RUN mkdir -p /root/.m2 && \
+    cp /opt/maven/conf/settings.xml /root/.m2/
 
 # 设置工作目录
 WORKDIR /workspace
 
-# 切换到开发用户
-USER developer
+# 使用 root 用户
 
 # 设置 Java 工具选项
 ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
