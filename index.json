@@ -1,5 +1,13 @@
 ﻿[
     {
+        "name":  "debian/bullseye-slim",
+        "description":  "cmake/ninja"
+    },
+    {
+        "name":  "dotnet/sdk2.1",
+        "description":  ".net sdk2.1"
+    },
+    {
         "name":  "dotnet/sdk3.1",
         "description":  ".net sdk3.1"
     },
