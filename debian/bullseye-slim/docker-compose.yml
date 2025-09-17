@@ -1,0 +1,14 @@
+services:
+  dotnet-dev:
+    image: zhcoder-docker-registry.com:8000/dev-env/debian:bullseye-slim
+    container_name: ${container_name:-debian-dev}
+    volumes:
+      - ${workspace}:/workspace
+    working_dir: /workspace
+    command: tail -f /dev/null
+    networks:
+      - dev-network
+
+networks:
+  dev-network:
+    driver: bridge
